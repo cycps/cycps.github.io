@@ -1,3 +1,0 @@
-# Getting Started
-
-# Integration Tests
