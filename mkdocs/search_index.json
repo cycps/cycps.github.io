@@ -1,0 +1,114 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Cypress Synopsis\n\n\nCypress is an experimental design engine for internetworked cyber-physical systems. An internetworked cyber-physical (ICPS) system typically is made up of the following.\n\n\n\n\nComputer Networks\n\n\nPhysical Networks\n\n\nSensors \n Actuators\n\n\nDistributed Monitoring \n Control Software\n\n\n\n\nTake for example, the power grid. Computer networks comprise the computers, routers, and switches that interconnect substations and subsequently monitoring and control systems. Physical networks comprise the generators, transformers, transmission lines, busbars and load centres that connect society to electric power. Sensors and actuators are the conduit by which the computer and physical are themselves connected. Taken together these components are an ICPS.\n\n\nCypress allows users to design ICPS system experiments and instantiate them in a hybrid simulated-physical emulated-cyber (SPEC) environment. This is accomplished through the combination of the following.\n\n\n\n\nGraphical Modeling Environment\n\n\nICPS Data Model \n\n\nICPS Model Analysis and Interrogation Algorithm Suite\n\n\nAutomated Experimentation Runtime\n\n\nSimulation Engine for Network Control Environments\n\n\n\n\nAbout This Document\n\n\nThis document covers the design and implementation of the Cypress design engine.", 
+            "title": "Intro"
+        }, 
+        {
+            "location": "/#cypress-synopsis", 
+            "text": "Cypress is an experimental design engine for internetworked cyber-physical systems. An internetworked cyber-physical (ICPS) system typically is made up of the following.   Computer Networks  Physical Networks  Sensors   Actuators  Distributed Monitoring   Control Software   Take for example, the power grid. Computer networks comprise the computers, routers, and switches that interconnect substations and subsequently monitoring and control systems. Physical networks comprise the generators, transformers, transmission lines, busbars and load centres that connect society to electric power. Sensors and actuators are the conduit by which the computer and physical are themselves connected. Taken together these components are an ICPS.  Cypress allows users to design ICPS system experiments and instantiate them in a hybrid simulated-physical emulated-cyber (SPEC) environment. This is accomplished through the combination of the following.   Graphical Modeling Environment  ICPS Data Model   ICPS Model Analysis and Interrogation Algorithm Suite  Automated Experimentation Runtime  Simulation Engine for Network Control Environments", 
+            "title": "Cypress Synopsis"
+        }, 
+        {
+            "location": "/#about-this-document", 
+            "text": "This document covers the design and implementation of the Cypress design engine.", 
+            "title": "About This Document"
+        }, 
+        {
+            "location": "/arch/", 
+            "text": "", 
+            "title": "Architecture"
+        }, 
+        {
+            "location": "/dev/", 
+            "text": "Getting Started\n\n\nIntegration Tests", 
+            "title": "Development"
+        }, 
+        {
+            "location": "/dev/#getting-started", 
+            "text": "", 
+            "title": "Getting Started"
+        }, 
+        {
+            "location": "/dev/#integration-tests", 
+            "text": "", 
+            "title": "Integration Tests"
+        }, 
+        {
+            "location": "/web/", 
+            "text": "Design\n\n\nUser API\n\n\nInternal API", 
+            "title": "Modeling Environment"
+        }, 
+        {
+            "location": "/web/#design", 
+            "text": "", 
+            "title": "Design"
+        }, 
+        {
+            "location": "/web/#user-api", 
+            "text": "", 
+            "title": "User API"
+        }, 
+        {
+            "location": "/web/#internal-api", 
+            "text": "", 
+            "title": "Internal API"
+        }, 
+        {
+            "location": "/addie/", 
+            "text": "Design\n\n\nSoftstate Data Tier\n\n\nData Model\n\n\nExperiment Design CRUD API\n\n\nExperiment Design QA API\n\n\nExperiment Result QA API\n\n\nExperiment Runtime API\n\n\nInternal Code Docs", 
+            "title": "Addie"
+        }, 
+        {
+            "location": "/addie/#design", 
+            "text": "", 
+            "title": "Design"
+        }, 
+        {
+            "location": "/addie/#softstate-data-tier", 
+            "text": "", 
+            "title": "Softstate Data Tier"
+        }, 
+        {
+            "location": "/addie/#data-model", 
+            "text": "", 
+            "title": "Data Model"
+        }, 
+        {
+            "location": "/addie/#experiment-design-crud-api", 
+            "text": "", 
+            "title": "Experiment Design CRUD API"
+        }, 
+        {
+            "location": "/addie/#experiment-design-qa-api", 
+            "text": "", 
+            "title": "Experiment Design QA API"
+        }, 
+        {
+            "location": "/addie/#experiment-result-qa-api", 
+            "text": "", 
+            "title": "Experiment Result QA API"
+        }, 
+        {
+            "location": "/addie/#experiment-runtime-api", 
+            "text": "", 
+            "title": "Experiment Runtime API"
+        }, 
+        {
+            "location": "/addie/#internal-code-docs", 
+            "text": "", 
+            "title": "Internal Code Docs"
+        }, 
+        {
+            "location": "/data/", 
+            "text": "", 
+            "title": "Data"
+        }, 
+        {
+            "location": "/sim/", 
+            "text": "", 
+            "title": "Simulation"
+        }
+    ]
+}
