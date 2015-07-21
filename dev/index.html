@@ -73,8 +73,9 @@
             
                 <li class="toctree-l3"><a href="#getting-started">Getting Started</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#integration-tests">Integration Tests</a></li>
+                    <li><a class="toctree-l4" href="#source-code">Source Code</a></li>
+                
+                    <li><a class="toctree-l4" href="#up-and-running">Up and Running</a></li>
                 
             
             </ul>
@@ -143,7 +144,89 @@
             <div class="section">
               
                 <h1 id="getting-started">Getting Started</h1>
-<h1 id="integration-tests">Integration Tests</h1>
+<p>Getting started with Cypress development is actually quite easy. Because we consider the development and deployment environments for Cypress as a part of its design and are themselves integrated into the code base, you as a developer don't need to do much to 'configure' your own environment. Cypress has scripts that use <a href="http://www.vagrantup.com">Vagrant</a> to automatically create a virtual development environment for you. All the dependencies for building, deploying, running and testing cypress code are cooked into this environment.</p>
+<p>The only development dependencies you will need on your machine are</p>
+<ul>
+<li><a href="http://www.vagrantup.com">Vagrant</a> version 7.4+</li>
+<li>Any of the following
+  <a href="http://www.virtualbox.org">VirtualBox</a>, 
+  <a href="https://www.vmware.com/products/fusion">VMware Fusion</a>, 
+  <a href="https://www.vmware.com/products/workstation">VMware Workstation</a></li>
+<li><a href="https://git-scm.com">Git</a></li>
+<li><a href="https://github.com/vim/vim">A Text Editor</a></li>
+<li><a href="https://www.ruby-lang.org">Ruby</a></li>
+</ul>
+<h2 id="source-code">Source Code</h2>
+<p>All of the source code for Cypress lives at <a href="https://github.com/cycps">our GitHub organization site</a>. Here you will find the following repositories, for a big picture idea about what the code contained in each does take a look at the <a href="../arch">Architecture</a> section. The names of the repositories map directly onto their corresponding components in the architecture description.</p>
+<h3 id="core-components">Core Components</h3>
+<ul>
+<li><strong>addie</strong> : design and experimentation automation engine</li>
+<li><strong>web</strong> : graphical web-based design environment</li>
+<li><strong>data</strong> : back end persistent data storage</li>
+</ul>
+<h3 id="devops">DevOps</h3>
+<ul>
+<li><strong>test</strong> : development/deployment environment model and integration tests</li>
+<li><strong>doc</strong> : source for the documentation you are reading</li>
+<li><strong>cycps.github.io</strong> : compiled form of the documentation you are reading</li>
+</ul>
+<h2 id="up-and-running">Up and Running</h2>
+<p>The best way to get started with Cypress development is to clone and launch the test environment. This will actually also clone all of the other core component repositories as well. It does this to get fresh copies of the latest stable code from GitHub for the core components, subsequently compiling and launching them in the test environment. Let's get started.</p>
+<p>Clone into the Cypress test repository</p>
+<pre><code class="shell">$ git clone git@github.com:cycps/test.git
+</code></pre>
+
+<p>Go to the test folder and execute the <code>run.rb</code> script. This will launch the Cypress development environment as a collection of Vagrant managed virtual machines. This will take a few minutes. Making startup time quicker <a href="https://github.com/cycps/test/issues/1">is on the radar</a>. You may also be asked which adapter on your host machine to connect bridged adapters in the virtual machines to, please select an adapter that is connected to the internet. Also note that you need internet connectivity for this step as the installation procedure for the machines accesses remote servers for software download in the initial setup.</p>
+<pre><code class="shell">$ cd test  
+$ ./run.rb  
+</code></pre>
+
+<p>When the startup script finished you will have a vagrant development environment with 4 virtual machines. You can verify the environment as follows.  Note that if you are running VirtualBox then the text inside the parentheses to the right of running will say <code>virtualbox</code>.</p>
+<pre><code class="shell">$ cd env
+$ vagrant status
+Current machine states:
+
+data                      running (vmware_fusion)
+svc                       running (vmware_fusion)
+client                    running (vmware_fusion)
+web                       running (vmware_fusion)
+
+This environment represents multiple VMs. The VMs are all listed
+above with their current state. For more information about a specific
+VM, run `vagrant status NAME`.
+</code></pre>
+
+<p>Each of these virtual machines has Cypress components installed. In fact when the environment was brought up, the source code for each component in the environment was mounted onto its respective machine using NFS, built and then installed on that machine. The NFS mounted source directories are located in a hidden folder called <code>.test</code> located in the <code>test</code> folder we cloned from GitHub. You can edit the sources here locally using your text editor, the changes will be propagated immediately to the virtual environment where you can build and test your changes or additions.</p>
+<p>To get a feel for how this works, lets launch the addie/design daemon on the <code>svc</code> VM and then run some API tests that target addi/design from the <code>client</code> VM. You will need two terminal windows for this, each with the CWD in the test/env folder. First let's use Vagrants ssh functionality to bring up a terminal on the <code>svc</code> machine. Once the terminal is up we will launch addie/design.</p>
+<pre><code class="shell">$ vagrant ssh svc
+Welcome to Ubuntu 15.04 (GNU/Linux 3.19.0-15-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+vagrant@addie:~$ design
+2015/07/21 00:57:26 Cypress Design Automator .... Go!
+2015/07/21 00:57:26 Opening connecton to pgdb
+2015/07/21 00:57:26 listening ...
+</code></pre>
+
+<p>Now that addie/design is up and running, lets fire some tests at it from <code>client</code></p>
+<pre><code class="shell">$ vagrant ssh client
+Welcome to Ubuntu 15.04 (GNU/Linux 3.19.0-15-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+vagrant@client:~$ cd ~/.cypress/addie/spec/
+vagrant@client:~/.cypress/addie/spec$ ./run_dredd_api_tests.sh 
+info: Beginning Dredd testing...
+info: Found Hookfiles: /home/vagrant/.cypress/addie/spec/hookstls.js
+hook: before all
+pass: POST /design/system47 duration: 59ms
+pass: POST /design/system47 duration: 40ms
+pass: POST /design/system47 duration: 28ms
+pass: POST /design/system47/delete duration: 44ms
+complete: 4 passing, 0 failing, 0 errors, 0 skipped, 4 total
+complete: Tests took 181ms
+</code></pre>
+
+<p>All of the source code folders are mounted at <code>~/.cypress/&lt;project-name&gt;</code>. Now if you wanted to edit the source of addie/design and see if still passes it's client API tests, you could modify the code on your local machine, rebuild addie/test (see addie docs for how to build, install and test addie code) and see if your modifications preserve the results of the tests.</p>
               
             </div>
           </div>
