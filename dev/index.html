@@ -78,6 +78,9 @@
                     <li><a class="toctree-l4" href="#up-and-running">Up and Running</a></li>
                 
             
+                <li class="toctree-l3"><a href="#testing">Testing</a></li>
+                
+            
             </ul>
         
     </li>
@@ -227,6 +230,20 @@ complete: Tests took 181ms
 </code></pre>
 
 <p>All of the source code folders are mounted at <code>~/.cypress/&lt;project-name&gt;</code>. Now if you wanted to edit the source of addie/design and see if still passes it's client API tests, you could modify the code on your local machine, rebuild addie/test (see addie docs for how to build, install and test addie code) and see if your modifications preserve the results of the tests.</p>
+<h1 id="testing">Testing</h1>
+<p>Cypress aims to be a well tested engine. It is our view that tests are just as important as the code itself. The core of the Cypress functionality is exposed through the <code>addie</code> APIs. Thus the most important tests we have are the <code>addie</code> API tests. The goal is that, when developing new features, or fixing bugs, the <code>addie</code> API tests can provide developers with a high level of assurance that new code is not breaking existing functionality or that bug fixes are actually fixing bugs. The first step to fixing any bug is developing a reproducing test case.</p>
+<p>Our API test are written as <a href="https://apiblueprint.org">API Blueprint</a> files. The file that we used to run the test above was an API Blueprint file. Lets take a closer look at the <a href="https://github.com/cycps/addie/blob/master/spec/run_dredd_api_tests.sh">run_dredd_apitests.sh</a> we used in the script earlier.</p>
+<script src="http://gist-it.appspot.com/http://github.com/cycps/addie/blob/master/spec/run_dredd_api_tests.sh"></script>
+
+<p>We are using a program called <a href="https://github.com/apiaryio/dredd">dredd</a> to automate testing the blueprint. More on dredd in a moment. First let's look at the  API Blueprint file <a href="https://github.com/cycps/addie/blob/master/spec/design.md">design.md</a> that it is using.</p>
+<script src="http://gist-it.appspot.com/http://github.com/cycps/addie/blob/master/spec/design.md"></script>
+
+<script type="text/javascript">
+  $("pre").addClass("linenums");
+</script>
+
+<p>The first thing to notice is that this file is really just GitHub markdown. The important part starts at <code>Experiment Update</code> and the partial URL <code>/design/{xpid}</code> that is referenced inside the square brackets. This indicates that the test cases to follow are to be evaluated against this address. <code>xpid</code> is in brackets because it is a parameter. In this instance of the blueprint we are supplying the default parameter as <code>xpid=system47</code>. This parameter can also be supplied by tools at test-time like dredd. Following the <code>[POST]</code> directive three request-reply test cases are described in terms of their post content. When dredd is executed over this file it supplies these parameters in the requests and parses responses to ensure they match expectations. This example simply shows creating a computer, updating that computer and then submitting a bad update to <code>addie</code> and expecting an error in return.</p>
+<p>The final test cases use the <code>/design/{x}/delete</code> part of the <code>addie/design</code> api to essentially clean up after the test. If cleaning up using the API is for some reason not possible (you should first think about the design and testability of your code) and then use the dredd's hookfile mechanism to execute some cleanup code afterword. We are actually using a 'before-hook' <a href="https://github.com/cycps/addie/blob/master/spec/hookstls.js">hookstls.js</a> in <a href="https://github.com/cycps/addie/blob/master/spec/run_dredd_api_tests.sh">run_dredd_apitests.sh</a> to let the node.js runtime (where dredd runs) that we are OK with the insecure development SSL cert that is coming back from <code>addie</code>.</p>
               
             </div>
           </div>
