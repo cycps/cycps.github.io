@@ -201,6 +201,7 @@ VM, run `vagrant status NAME`.
 
 <p>Each of these virtual machines has Cypress components installed. In fact when the environment was brought up, the source code for each component in the environment was mounted onto its respective machine using NFS, built and then installed on that machine. The NFS mounted source directories are located in a hidden folder called <code>.test</code> located in the <code>test</code> folder we cloned from GitHub. You can edit the sources here locally using your text editor, the changes will be propagated immediately to the virtual environment where you can build and test your changes or additions.</p>
 <p>To get a feel for how this works, lets launch the addie/design daemon on the <code>svc</code> VM and then run some API tests that target addi/design from the <code>client</code> VM. You will need two terminal windows for this, each with the CWD in the test/env folder. First let's use Vagrants ssh functionality to bring up a terminal on the <code>svc</code> machine. Once the terminal is up we will launch addie/design.</p>
+<p><b><span style="color:red;">Note: this will not work at the moment, I am updating the API, welcome to pre-alpha</span></b></p>
 <pre><code class="shell">$ vagrant ssh svc
 Welcome to Ubuntu 15.04 (GNU/Linux 3.19.0-15-generic x86_64)
 
